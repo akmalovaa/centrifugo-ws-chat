@@ -1,0 +1,35 @@
+services:
+  centrifugo:
+    container_name: centrifugo
+    image: centrifugo/centrifugo:v6.2.0
+    ports:
+      - 8000:8000
+    volumes:
+      - ./centrifugo/config.json:/centrifugo/config.json
+    command: centrifugo --config=/centrifugo/config.json
+
+  chat:
+    container_name: chat
+    build: ./app
+    ports:
+      - 8001:8001
+    volumes:
+      - ./app:/app
+    depends_on:
+      - centrifugo
+    environment:
+      # CENTRIFUGO_URL: "http://centrifugo:8000"
+      # CENTRIFUGO_SOCKET_URL: "ws://localhost:80/connection/websocket"
+      CENTRIFUGO_API_KEY: "api_key"
+      CENTRIFUGO_SECRET: "secret"
+      CENTRIFUGO_CHANNEL: "chat"
+
+  nginx:
+    image: nginx:1.28.0-alpine
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - centrifugo
+      - chat

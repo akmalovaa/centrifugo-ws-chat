@@ -1,0 +1,23 @@
+{
+  "client": {
+     "token": {
+        "hmac_secret_key": "secret"
+      },
+     "allowed_origins": ["*"]
+  },
+  "http_api": {
+    "key": "api_key"
+  },
+  "channel": {
+     "without_namespace": {
+        "allow_subscribe_for_client": true
+     }
+  },
+  "admin": {
+    "enabled": true,
+    "insecure": true
+  },
+  "prometheus": {
+    "enabled": true
+  }
+}
