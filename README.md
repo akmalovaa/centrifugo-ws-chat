@@ -8,6 +8,9 @@ Learning centrifugo websocket
 
 ![scheme](./.github/images/chat_screen.png)
 
+![scheme](./.github/images/centrifugo_1.png)
+![scheme](./.github/images/centrifugo_2.png)
+
 Run dev container
 ```sh
 docker-compose -f dev_compose.yaml up -d
