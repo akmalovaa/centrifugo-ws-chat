@@ -24,7 +24,6 @@ Admin UI method publish
 
 
 ### Other projects examples:
-- https://github.com/Desire456/awesome-docker-compose/blob/76713c21bb8691609b0cb41f9cddaa1fcadd812b/centrifugo/config.json
 - https://github.com/centrifugal/examples/blob/master/v6/leaderboard/backend/app.py
 - ...
 
