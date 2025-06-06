@@ -65,3 +65,27 @@ h1 {
 #send-button:hover {
     background: #0056b3;
 }
+
+.user-id-box {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+#user-id-input {
+    width: 100px;
+    padding: 3px 7px;
+    font-size: 0.92em;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #f8f9fa;
+    text-align: right;
+}
+#save-user-id {
+    padding: 4px 10px;
+    font-size: 0.92em;
+    border-radius: 4px;
+    border: 1px solid #007bff;
+    background: #007bff;
+    color: #fff;
+    cursor: pointer;
+}

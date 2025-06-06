@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,14 @@
     <link href="/static/style.css" rel="stylesheet">
     <link id="favicon" rel="icon" type="image/x-icon" href="static/favicon.ico">
 </head>
+
 <body>
     <div class="chat-container">
         <h1>Websocket Chat</h1>
+        <div class="user-id-box" style="margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <label for="user-id-input" style="font-size: 0.95em;">Name:</label>
+            <input type="text" id="user-id-input" placeholder="User ID" autocomplete="off" />
+        </div>
         <div id="chat-messages" class="chat-messages"></div>
         <div class="chat-input">
             <input type="text" id="message-input" placeholder="Type your message...">
@@ -22,36 +28,51 @@
         const centrifugoUrl = "{{ centrifugo_url }}";
         const centrifugoToken = "{{ centrifugo_token }}";
         const channel = "{{ channel }}";
-        const userId = "{{ user_id }}";
-        
+        const userIdInput = document.getElementById('user-id-input');
+
+        // Инициализация userId
+        let userId = localStorage.getItem('user_id');
+        if (!userId) {
+            userId = 'user_' + Math.floor(Date.now() / 1000);
+            localStorage.setItem('user_id', userId);
+        }
+        userIdInput.value = userId;
+
+        userIdInput.addEventListener('input', function () {
+            userId = userIdInput.value.trim() || userId;
+            localStorage.setItem('user_id', userId);
+        });
+
+
+        // ...existing chat code...
         const chatMessages = document.getElementById('chat-messages');
         const messageInput = document.getElementById('message-input');
         const sendButton = document.getElementById('send-button');
-        
+
         // Connect to Centrifugo
         const centrifuge = new Centrifuge(centrifugoUrl, {
             token: centrifugoToken
         });
-        
-        centrifuge.on('connect', function(ctx) {
+
+        centrifuge.on('connect', function (ctx) {
             console.log("Connected to Centrifugo", ctx);
         });
-        
-        centrifuge.on('disconnect', function(ctx) {
+
+        centrifuge.on('disconnect', function (ctx) {
             console.log("Disconnected from Centrifugo", ctx);
         });
-        
+
         // Subscribe to channel
         const subscription = centrifuge.newSubscription(channel);
-        
-        subscription.on('publication', function(ctx) {
+
+        subscription.on('publication', function (ctx) {
             const message = ctx.data;
             addMessageToChat(message);
         });
-        
+
         subscription.subscribe();
         centrifuge.connect();
-        
+
         // Send message
         function sendMessage() {
             const text = messageInput.value.trim();
@@ -63,49 +84,50 @@
                     },
                     body: JSON.stringify({
                         message: text,
-                        user_id: userId
+                        user_id: userIdInput.value.trim() || userId
                     })
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .catch(error => {
-                    console.error('Error sending message:', error);
-                });
-                
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .catch(error => {
+                        console.error('Error sending message:', error);
+                    });
+
                 messageInput.value = '';
             }
         }
-        
+
         sendButton.addEventListener('click', sendMessage);
-        messageInput.addEventListener('keypress', function(e) {
+        messageInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 sendMessage();
             }
         });
-        
+
         // Add message to chat
         function addMessageToChat(message) {
             const messageElement = document.createElement('div');
             messageElement.className = 'message';
-            
+
             const userElement = document.createElement('span');
             userElement.className = 'user';
             userElement.textContent = message.user_id + ': ';
-            
+
             const textElement = document.createElement('span');
             textElement.className = 'text';
             textElement.textContent = message.text;
-            
+
             messageElement.appendChild(userElement);
             messageElement.appendChild(textElement);
-            
+
             chatMessages.appendChild(messageElement);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
     </script>
 </body>
+
 </html>
