@@ -127,6 +127,13 @@
             chatMessages.appendChild(messageElement);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
+
+        // Загрузка истории сообщений
+        fetch('/history')
+            .then(response => response.json())
+            .then(messages => {
+                messages.forEach(addMessageToChat);
+            });
     </script>
 </body>
 
