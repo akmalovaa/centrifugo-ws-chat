@@ -6,6 +6,8 @@ Learning centrifugo websocket
 - Back - Python FastAPI
 - WebSocket Server - [centrifugo](https://github.com/centrifugal/centrifugo)
 
+![scheme](./.github/images/chat_screen.png)
+
 Run dev container
 ```sh
 docker-compose -f dev_compose.yaml up -d
@@ -31,3 +33,5 @@ Admin UI method publish
 ### TO DO:
 - database (message history)
 - redis (consumers)
+- add scheme
+
