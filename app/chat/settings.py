@@ -9,4 +9,5 @@ class Settings(pydantic_settings.BaseSettings):
     centrifugo_secret: str = "secret"
     centrifugo_channel: str = "chat"
 
+
 settings: Settings = Settings()
