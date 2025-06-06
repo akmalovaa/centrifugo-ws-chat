@@ -9,6 +9,12 @@ services:
     build: ./app
     depends_on:
       - centrifugo
+    environment:
+      # CENTRIFUGO_URL: "http://centrifugo:8000"
+      CENTRIFUGO_SOCKET_URL: "wss://chat.akmalov.com/connection/websocket" # change your hostname or ip 
+      # CENTRIFUGO_API_KEY: "api_key"
+      # CENTRIFUGO_SECRET: "secret"
+      # CENTRIFUGO_CHANNEL: "chat"
 
   nginx:
     image: nginx:1.28.0-alpine
