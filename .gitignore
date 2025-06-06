@@ -15,5 +15,4 @@ venv/
 dist/
 build/
 .DS_Store
-*.lock
 temp/
