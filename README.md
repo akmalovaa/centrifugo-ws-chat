@@ -6,10 +6,13 @@ Learning centrifugo websocket
 - Back - Python FastAPI
 - WebSocket Server - [centrifugo](https://github.com/centrifugal/centrifugo)
 
-![scheme](./.github/images/chat_screen.png)
 
-![scheme](./.github/images/centrifugo_1.png)
-![scheme](./.github/images/centrifugo_2.png)
+![scheme](./.github/images/scheme.excalidraw.png)
+
+![chat](./.github/images/chat_screen.png)
+
+![centrifugo](./.github/images/centrifugo_1.png)
+![centrifugo](./.github/images/centrifugo_2.png)
 
 Run dev container
 ```sh
